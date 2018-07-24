@@ -1,0 +1,158 @@
+using System.IO;
+using System;
+
+class Program
+{
+    
+    static void AddDetails(Account holder,int itr)
+    {
+        Console.WriteLine("Enter the Name");
+        holder.name=Console.ReadLine();
+        holder.id=itr;
+        Console.WriteLine("Enter the Account Type:\nSavings\nCurrent\nDMAT");
+        
+        holder.AccountType=Console.ReadLine();
+        
+        
+        while(true)
+        {
+            Console.WriteLine("Enter the Amount ");
+            holder.balance=Convert.ToInt32(Console.ReadLine());
+            if(holder.AccountType=="Current" && holder.balance<0)
+            {
+                Console.WriteLine("Please enter value greater than 0");
+            }
+            else if (holder.AccountType=="Savings" && holder.balance<1000)
+            {
+                Console.WriteLine("Please enter value greater than 1000");
+            }
+            else if (holder.AccountType=="DMAT" && holder.balance<-1000)
+            {
+                Console.WriteLine("Please enter value greater than -1000");
+            }
+            else break;
+        }
+    
+    }
+    
+    
+    static void DeductMoney(Account holder)
+    {
+        int amount;
+            while(true)
+        {
+            Console.WriteLine("Enter the Withdrawl Amount ");
+            amount=Convert.ToInt32(Console.ReadLine());
+            holder.balance-=amount;
+            if(holder.AccountType=="Current" && holder.balance<0)
+            {
+                Console.WriteLine("Balance can't be less than zero");
+            }
+            else if (holder.AccountType=="Savings" && holder.balance<1000)
+            {
+                Console.WriteLine("Balance can't be less than 1000");
+            }
+            else if (holder.AccountType=="DMAT" && holder.balance<-1000)
+            {
+                Console.WriteLine("Balance can't be less  than -1000");
+            }
+            else 
+            {
+                holder.balance-=amount;
+            break;
+                
+            }
+        } 
+    }
+    
+    
+    static void AddMoney( Account holder)
+    {
+        Console.WriteLine("Enter the Amount you want to add");
+        int amount=Convert.ToInt32(Console.ReadLine());
+        holder.balance+=amount;
+    }
+    
+    static void Display_Accounts(Account holder)
+    {
+        
+        Console.WriteLine("Name:"+holder.name);
+        Console.WriteLine("ID:"+holder.id);
+        Console.WriteLine("Balance:"+holder.balance);
+        Console.WriteLine("Account Type:"+holder.AccountType);
+    }
+    
+    
+    
+    
+    static void Main()
+    {
+        Console.WriteLine("WELCOME");
+        Console.WriteLine("Please enter the number of accounts you want:");
+        int number=Convert.ToInt32(Console.ReadLine());
+        Account[] holder=new Account[6];    
+        for (int itr=0;itr<number;itr++)
+        {
+        holder[itr]=new Account();
+          AddDetails(holder[itr],itr);  
+        }
+        
+        
+        Console.WriteLine("Enter the Function you want to perform:\n1.Display all Accounts");
+        
+        for (int itr=0;itr<number;itr++)
+        {
+            Display_Accounts(holder[itr]);
+        }
+        
+        
+        while(true)
+        {
+        Console.WriteLine("Enter your Id for more functions.\n");
+        int id=Convert.ToInt32(Console.ReadLine());
+        if (id<=number)
+        {
+        Console.WriteLine("Enter the Function you want to perform:\n1.Add money\n2.Withdraw\n3.Try for another ID\n4.Display Account Details\n5.Exit");
+        string option=Console.ReadLine();
+        if (option[0]=='1')
+        {
+            AddMoney(holder[id]);
+        }
+            
+        else if (option[0]=='2')
+        {
+            
+            DeductMoney(holder[id]);
+        }
+        else if (option[0]=='3')
+        {
+            continue;
+        }
+        
+        else if (option[0]=='4')
+        {
+            Display_Accounts(holder[id]);
+        }
+        else
+        {
+        Console.WriteLine("Bye Bye");
+            break;
+        }
+            
+        }
+        else
+        {
+            Console.WriteLine("Invalid ID");
+        }
+        }
+    }
+    
+
+}
+
+class Account{
+    public string name;
+    public int id;
+    public string AccountType;
+    public int balance;
+}
