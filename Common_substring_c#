@@ -1,0 +1,47 @@
+
+class Solution {
+
+    // Complete the commonChild function below.
+
+    static int commonChild(string s1, string s2) 
+    {
+   
+       int i=0,j=0,l2=s2.Length,l1=s1.Length;
+        
+        int[,] matrix=new int[l1+1,l2+1];
+        for(i=1;i<=s1.Length;i++)
+        {
+            for(j=1;j<=s2.Length;j++)
+            {
+                
+                if (s1[i-1]==s2[j-1]) 
+               {
+                   matrix[i,j]=matrix[i-1,j-1]+1;
+               }
+                else
+                 {
+                matrix[i,j]=Math.Max(matrix[i,j-1], matrix[i-1,j]);  
+                 }
+             }
+        
+         }
+        i= matrix[s1.Length,s2.Length];
+         return i;
+    }
+
+    static void Main(string[] args) 
+    {
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+        string s1 = Console.ReadLine();
+
+        string s2 = Console.ReadLine();
+
+        int result = commonChild(s1, s2);
+
+        textWriter.WriteLine(result);
+
+        textWriter.Flush();
+        textWriter.Close();
+    }
+}
