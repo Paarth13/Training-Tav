@@ -1,0 +1,135 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace assignment2
+{
+    public delegate void Del(Employee employee, int itr);
+    class Empty_Exceptions:Exception
+    {
+        public Empty_Exceptions(string message):base(message) 
+        {
+
+        }
+    }
+    class Program
+    {
+
+
+        public static string path = @"C:\Users\logs.txt";
+        static void AddDetails(Employee employee, int itr)
+        {
+            Console.WriteLine("Enter the Name");
+            employee.name = Console.ReadLine();
+            employee.id = itr;
+            while (true)
+            {
+                Console.WriteLine("Enter the Qualification:\nBCA BE BSC \nCA MCom BCom ");
+            try
+            {
+                employee.qualification = Console.ReadLine();
+                    if (string.IsNullOrEmpty(employee.qualification))
+                    { throw new Empty_Exceptions("Please Enter qualification as mentioned in the options.");
+                       
+                    }
+                    else
+                    {
+                        break;
+                    }
+            }
+            catch (Empty_Exceptions empty)
+            {
+                Console.WriteLine(empty.Message);
+
+                   if (!File.Exists(path))
+                    {
+                        // Create a file to write to.
+                        using (StreamWriter sw = File.CreateText(path))
+                        {
+                            sw.WriteLine(empty.StackTrace);
+                        }
+                    }
+
+            }
+        }
+        
+        if (employee.qualification.Equals("BSC")|| employee.qualification.Equals("BCA") || employee.qualification.Equals("BE")  )
+                {
+                employee.department="IT";
+                }
+            else if (employee.qualification.Equals("CA") || employee.qualification.Equals("MCom") || employee.qualification.Equals("BCOM"))
+            {
+                employee.department = "Accounts";
+            }
+
+        }
+
+
+
+
+   
+
+    static void Display_(Employee employee)
+    {
+
+        Console.WriteLine("Name:" + employee.name);
+        Console.WriteLine("ID:" + employee.id);
+            Console.WriteLine("Qualification:" + employee.qualification);
+            Console.WriteLine("Department:" + employee.department);
+        
+    }
+
+
+
+
+    static void Main()
+    {
+        Console.WriteLine("WELCOME");
+ 
+     
+        Employee[] employee = new Employee[10];
+            int itr = 0;
+            string s1;
+            while (true) {
+                Console.WriteLine("1.To Add an Employee Press Y\n2. Press E for exit");
+                s1 = Console.ReadLine();
+
+                if (s1.Equals("E") || s1.Equals("e"))
+                    Environment.Exit(0);
+                else
+                {
+                    Del del1=new Del(AddDetails);
+                    employee[itr] = new Employee();
+                    del1(employee[itr], itr);
+                    itr++;
+                    Console.WriteLine("Display all Accounts");
+
+                    for (int itr1 = 0; itr1 < itr; itr1++)
+                    {
+                        Display_(employee[itr1]);
+                    }
+
+                }
+                
+                
+            }
+            
+            
+       
+    }
+
+
+}
+
+
+public class Employee
+{
+    public string name;
+    public int id;
+    public string qualification;
+    public string department ;
+}
+}
