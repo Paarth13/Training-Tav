@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data_structures
 {
-    class queue
+    class queue:ICommon
     {
         
         int front=0,rear=-1;
