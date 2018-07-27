@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data_structures
 {
-    class Linked_list
+    class Linked_list:ICommon
     {
         int _count = 0;
        public  class Node
