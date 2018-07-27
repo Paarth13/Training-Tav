@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data_structures
 {
-    class stack
+    class stack:ICommon
     {
         
         int[] stac=new int[5];
